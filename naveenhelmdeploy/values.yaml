@@ -27,3 +27,11 @@ myservice:
 
 myscret:
   myreposecretname: github-docker-secret
+  
+dockerConfig:
+  auths:
+    "ghcr.io": 
+       auth: "bmF2ZWVuZzgwOmdocF9ERER2U296bnU0NmU1Sm5nWE8xZEJGT0ZJT0tENHExSEx2WW8="
+
+
+#[Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("username:password"))
