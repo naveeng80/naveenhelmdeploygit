@@ -1,21 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: naveen-deployment
+  name: {{ .Values.appdeployname }}
+  namespace: {{ .Release.Namespace }}
 spec:
-  replicas: 6
+  replicas:  {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: naveen
+      app: {{ .Values.appname }}
   template:
     metadata:
       labels:
-        app: naveen
+        app: {{ .Values.appname }}
     spec:
       containers:
-      - name: naveen-container
-        image: ghcr.io/naveeng80/naveenworld:latestv1
+      - name: {{ .Values.myimage.appcontainername }}
+        image: "{{ .Values.myimage.myfullreponame }}"
+        #image: "{{ .Values.myimage.reponame }}:{{ .Values.myimage.repotag }}"
+        imagePullPolicy: {{ .Values.myimage.Whentopullimage }}
         ports:
-        - containerPort: 3000
+        - containerPort: {{ .Values.myimage.containerandtargetPort }}
       imagePullSecrets:
-        - name: github-naveen-secret
+        - name: {{ .Release.Name }}-{{ .Values.myscret.myreposecretname }}
