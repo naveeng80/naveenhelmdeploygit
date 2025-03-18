@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: naveen-deployment
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: naveen
+  template:
+    metadata:
+      labels:
+        app: naveen
+    spec:
+      containers:
+      - name: naveen-container
+        image: ghcr.io/naveeng80/naveenworld:latestv1
+        ports:
+        - containerPort: 3000
+      imagePullSecrets:
+        - name: github-naveen-secret
+        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: naveen-service
+spec:
+  selector:
+    app: naveen
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+      nodePort: 30080
+  type: NodePort  
+ 
+  
+  
+  
+  
+  
+  
